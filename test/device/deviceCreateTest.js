@@ -223,7 +223,7 @@ describe("device create tests", function() {
       .end(done);
   });
 
-  describe('auto-registration', function() {
+  describe.skip('auto-registration', function() {
 
     it('auto-registers a device if the security settings allow', async function() {
       chai.assert(false, 'TODO');
