@@ -9,7 +9,12 @@ name: Create Release
 jobs:
   build:
     name: Upload Release Asset
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+        os: [ubuntu-latest]
+
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
@@ -30,10 +35,10 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Zip Folder
-        run: zip -r mage_${{steps.get_verison.outputs.VERSION}}.zip .
+        run: zip -r mage_${{steps.get_version.outputs.VERSION}}.zip .
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: mage_${{steps.get_verison.outputs.VERSION}}.zip
+          files: mage_${{steps.get_version.outputs.VERSION}}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
