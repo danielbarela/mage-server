@@ -20,7 +20,9 @@ jobs:
         run: |
           npm install
           npm test
-          npm run install --prefix web-app
+          cd web-app
+          npm install
+          cd ..
           npm run build-web
         env:
           CI: true
