@@ -9,18 +9,19 @@ name: Create Release
 jobs:
   build:
     name: Upload Release Asset
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node: [12.x]
         os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
       - name: npm install, build, and test
         run: |
           npm install
@@ -39,6 +40,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: mage_${{steps.get_version.outputs.VERSION}}.zip
+          files: mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_${{matrix.os}}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
