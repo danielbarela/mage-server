@@ -1,8 +1,7 @@
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - '*'
 
 name: Create Release
 
@@ -17,6 +16,17 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
+      - name: Set Friendly OS Name
+        id: friendly_os_name
+        run: |
+          if [ "$matrix_os" == "ubuntu-latest"]; then
+            echo ::set-output name=FRIENDLY_OS::linux
+          fi
+          if [ "$matrix_os" == "macos-latest"]; then
+            echo ::set-output name=FRIENDLY_OS::mac
+          fi
+        env:
+          matrix_os: ${{ matrix.os }}
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v1
@@ -36,10 +46,10 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Zip Folder
-        run: zip -r mage_${{steps.get_version.outputs.VERSION}}.zip .
+        run: zip -r mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_${{steps.friendly_os_name.outputs.VERSION}}.zip .
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_${{matrix.os}}.zip
+          files: mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_${{steps.friendly_os_name.outputs.VERSION}}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
