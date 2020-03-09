@@ -1,0 +1,149 @@
+<div class="row">
+  <div class="col-md-12">
+    <form name="account" ng-submit="$ctrl.signup(account)" method="post" autocomplete="off" novalidate>
+
+      <div class="top-gap mdc-text-field mdc-text-field--outlined" style="width: 100%">
+        <input type="text" 
+          id="username" 
+          name="username" 
+          placeholder="i.e. jappleseed" 
+          autocomplete="new-password" 
+          autocapitalize="off"
+          ng-model="$ctrl.user.username" 
+          required="true"
+          class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="username" class="mdc-floating-label">Username</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+
+      <div class="top-gap mdc-text-field mdc-text-field--outlined" style="width: 100%">
+          <input type="text" 
+          id="displayName" 
+          name="displayName" 
+          placeholder="Johnny Appleseed" 
+          autocomplete="none"
+          autocapitalize="off"
+          ng-model="$ctrl.user.displayName" 
+          required="true"
+          class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="displayName" class="mdc-floating-label">Display Name</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+
+      <div class="top-gap mdc-text-field mdc-text-field--outlined" style="width: 100%">
+          <input type="email" 
+          id="signup-email" 
+          name="signup-email" 
+          placeholder="johnny@appleseed.com" 
+          autocomplete="none"
+          autocapitalize="off"
+          ng-model="$ctrl.user.email" 
+          class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="signup-email" class="mdc-floating-label">Email</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+
+      <div class="top-gap mdc-text-field mdc-text-field--outlined" style="width: 100%">
+          <input type="tel" 
+          id="signup-phone" 
+          name="signup-phone" 
+          autocomplete="none"
+          autocapitalize="off"
+          ng-model="$ctrl.user.phone" 
+          class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="signup-phone" class="mdc-floating-label">Phone</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+
+      <div class="top-gap mdc-text-field mdc-text-field--outlined" style="width: 100%">
+          <input type="password" 
+          id="password" 
+          name="password" 
+          autocomplete="new-password"
+          autocapitalize="off"
+          ng-model="$ctrl.user.password" 
+          required="true"
+          ng-change="$ctrl.onPasswordChange()"
+          class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="password" class="mdc-floating-label">Password</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+
+      <div class="top-gap mdc-text-field mdc-text-field--outlined" style="width: 100%">
+          <input type="password" 
+          id="passwordconfirm" 
+          name="passwordconfirm" 
+          autocomplete="new-password"
+          autocapitalize="off"
+          ng-model="$ctrl.user.passwordconfirm" 
+          required="true"
+          class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="passwordconfirm" class="mdc-floating-label">Confirm Password</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+      <div class="mdc-text-field-helper-line">
+        <div class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg">Passwords do not match</div>
+      </div>
+
+      <div class="top-gap">
+        <div class="muted">Password Strength: <span class="text-{{$ctrl.passwordStrengthType}}">{{$ctrl.passwordStrength}}<span></div>
+        <div role="progressbar" class="top-gap-s mdc-linear-progress" ng-class="'progress-bar-' + $ctrl.passwordStrengthType">
+          <div class="mdc-linear-progress__buffering-dots"></div>
+          <div class="mdc-linear-progress__buffer"></div>
+          <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+          </div>
+          <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-button-container">
+        <button type="button" class="top-gap mdc-button mdc-button--raised secondary-button" ng-click="$ctrl.onCancel()">Cancel</button>
+        <button type="submit" class="top-gap mdc-button mdc-button--raised primary-button" >Sign Up</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="mdc-snackbar">
+  <div class="mdc-snackbar__surface">
+    <div class="mdc-snackbar__label"
+         role="status">
+      <h4>{{$ctrl.statusTitle}}</h4>
+      {{$ctrl.statusMessage}}
+    </div>
+    <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
+  </div>
+</div>

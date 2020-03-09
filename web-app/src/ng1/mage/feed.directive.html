@@ -1,0 +1,42 @@
+<div class="slide-left new-obs-card form-chooser feed-card ng-animatable" ng-if="newObservationForms">
+  <div class="feed-card-content">
+    <observation-form-chooser 
+      forms="newObservationForms" 
+      on-form-picked="createObservation(form)" 
+      on-form-close="cancelNewObservation()">
+    </observation-form-chooser>
+  </div>
+</div>
+
+<!-- TODO this needs angular 8 scroll directive-->
+<feed-scroll-wrapper ng-if="newObservation">
+  <observation-form form="newObservationForm" observation="newObservation" on-form-close="onFormClose()"></observation-form>
+</feed-scroll-wrapper>
+
+<user-view 
+  class="slide-left new-obs-card view-obs-card feed-card ng-animatable" 
+  ng-if="viewUser" 
+  user="viewUser" 
+  event="event" 
+  observations="observations"></user-view>
+
+<observation-view
+    class="slide-left new-obs-card view-obs-card feed-card ng-animatable"
+    ng-if="viewObservation"
+    observation="viewObservation" 
+    event="event"></observation-view>
+
+<feed-scroll-wrapper ng-if="editObservation">
+  <observation-form form="editForm" observation="editObservation" on-form-close="onFormClose()" on-observation-delete="onObservationDelete($event)"></observation-form>
+</feed-scroll-wrapper>
+
+<tab-list on-tab-switch="onTabSwitched(index)" tabs="tabs" class="tab-bg"></tab-list>
+<div class="observation-feed-container content content--active">
+  <observation-feed
+    ng-if="currentFeedPanel === 'observations'"
+    on-create-new-observation="createNewObservation()"></observation-feed>
+</div>
+
+<div class="people-feed-container content">
+  <user-feed ng-if="currentFeedPanel === 'people'"></user-feed>
+</div>
