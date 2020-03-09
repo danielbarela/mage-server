@@ -1,0 +1,30 @@
+on:
+  push:
+    tags:
+      - '*'
+
+name: If test
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node: [12.x]
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Set Friendly OS Name
+        id: friendly_os_name
+        run: |
+          if [ "${{ matrix.os }}" == "ubuntu-latest"]; then
+            echo "Setting friendly os to linux"
+            echo "::set-env name=FRIENDLY_OS::linux"
+          fi
+          if [ "${{ matrix.os }}" == "macos-latest"]; then
+            echo "Setting friendly os to mac"
+            echo "::set-env name=FRIENDLY_OS::mac"
+          fi
+        shell: bash
