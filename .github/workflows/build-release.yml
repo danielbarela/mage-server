@@ -1,8 +1,7 @@
-# on:
-#   push:
-#     tags:
-#       - '*'
-on: [push]
+on:
+  push:
+    tags:
+      - '*'
 
 name: Create Release
 
