@@ -1,7 +1,8 @@
-on:
-  push:
-    tags:
-      - '*'
+# on:
+#   push:
+#     tags:
+#       - '*'
+on: [push]
 
 name: Create Release
 
@@ -29,28 +30,28 @@ jobs:
           fi
         shell: bash
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm test
-          cd web-app
-          npm install
-          cd ..
-          npm run build-web
-        env:
-          CI: true
+      # - name: Use Node.js ${{ matrix.node }}
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{ matrix.node }}
+      # - name: npm install, build, and test
+      #   run: |
+      #     npm install
+      #     npm test
+      #     cd web-app
+      #     npm install
+      #     cd ..
+      #     npm run build-web
+      #   env:
+      #     CI: true
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Zip Folder
-        run: zip -r mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_${{matrix.os}}.zip .
+        run: zip -r mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_$FRIENDLY_OS.zip .
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_${{matrix.os}}.zip
+          files: mage_${{steps.get_version.outputs.VERSION}}_node${{matrix.node}}_$FRIENDLY_OS.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
