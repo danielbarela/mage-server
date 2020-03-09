@@ -94,10 +94,22 @@ async function tile(layer, tableName, { x, y, z }) {
       const height = 256;
       const featureDao = geopackage.getFeatureDao(table.name);
       if (!featureDao) return;
+
+      const shadedFeaturesTile = new ShadedFeaturesTile();
       const ft = new FeatureTile(featureDao, width, height);
       ft.setMaxFeaturesPerTile(10000);
-      const shadedFeaturesTile = new ShadedFeaturesTile();
       ft.setMaxFeaturesTileDraw(shadedFeaturesTile);
+
+      const lineColor = '#330000AA';
+      const lineWidth = 3.0;
+      const fillColor = '#00330011';
+      ft.pointPaint.setColor(lineColor);
+      ft.pointPaint.setStrokeWidth(lineWidth);
+      ft.linePaint.setStrokeWidth(lineWidth);
+      ft.linePaint.setColor(lineColor);
+      ft.polygonPaint.setStrokeWidth(lineWidth);
+      ft.polygonFillPaint.setColor(fillColor);
+
       tile = await ft.drawTile(x, y, z);
       break;
   }

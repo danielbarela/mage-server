@@ -20,10 +20,10 @@ jobs:
         id: friendly_os_name
         run: |
           if [ "$matrix_os" == "ubuntu-latest"]; then
-            echo ::set-output name=FRIENDLY_OS::linux
+            echo ::set-output name=FRIENDLY_OS::"linux"
           fi
           if [ "$matrix_os" == "macos-latest"]; then
-            echo ::set-output name=FRIENDLY_OS::mac
+            echo ::set-output name=FRIENDLY_OS::"mac"
           fi
         env:
           matrix_os: ${{ matrix.os }}
